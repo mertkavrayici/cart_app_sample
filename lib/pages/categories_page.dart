@@ -4,7 +4,6 @@ import 'package:shop_app/components/app_bar.dart';
 import 'package:shop_app/components/container.dart';
 import 'package:shop_app/models/product.dart';
 import 'package:shop_app/models/shopping.dart';
-import 'package:shop_app/pages/cart_page.dart';
 import 'package:shop_app/pages/products_page.dart';
 
 class CategoriesPage extends StatefulWidget {
