@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/components/app_bar.dart';
 import 'package:shop_app/components/container.dart';
 import 'package:shop_app/models/product.dart';
-import 'package:shop_app/models/shopping.dart';
-import 'package:shop_app/pages/cart_page.dart';
+import 'package:shop_app/models/product_provider.dart';
 
 class ProductsPage extends StatefulWidget {
   final int productType;
@@ -20,7 +19,8 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     void addToCart(Product product) {
-      Provider.of<Shopping>(context, listen: false).addItemtoCart(product);
+      Provider.of<ProductProvider>(context, listen: false)
+          .addItemtoCart(product);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Ürün Sepete Eklendi'),
         duration: const Duration(milliseconds: 2000),
@@ -28,11 +28,11 @@ class _ProductsPageState extends State<ProductsPage> {
       ));
     }
 
-    return Consumer<Shopping>(
+    return Consumer<ProductProvider>(
       builder: (context, value, child) => Scaffold(
-        appBar:ShoppAppBar(appbarTitle:widget.categoryName ,) ,
-        
-       
+        appBar: ShoppAppBar(
+          appbarTitle: widget.categoryName,
+        ),
         body: Center(
           child: Container(
             decoration: BoxDecoration(color: Colors.grey[200]),
@@ -42,29 +42,45 @@ class _ProductsPageState extends State<ProductsPage> {
                   const SizedBox(
                     height: 25,
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: value.productList
-                          .where((element) =>
-                              element.productType == widget.productType)
-                          .toList()
-                          .length,
-                      itemBuilder: (context, index) {
-                        Product eachProduct = value.productList
-                            .where((element) =>
-                                element.productType == widget.productType)
-                            .toList()[index];
-                        return ProductContainer(
-                          onTap: () {
-                            addToCart(eachProduct);
-                          },
-                          title: eachProduct.name,
-                          imagePath: eachProduct.imagePath,
-                          price: eachProduct.price,
-                        );
-                      },
-                    ),
-                  )
+                  FutureBuilder(
+                      future: value.getProductList(),
+                      builder:
+                          (context, AsyncSnapshot<List<Product>> snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!.isEmpty) {
+                            return Container();
+                          } else {
+                            return Expanded(
+                              child: ListView.builder(
+                                itemCount: snapshot.data!
+                                    .where((element) =>
+                                        element.productType ==
+                                        widget.productType)
+                                    .toList()
+                                    .length,
+                                itemBuilder: (context, index) {
+                                  Product eachProduct = snapshot.data!
+                                      .where((element) =>
+                                          element.productType ==
+                                          widget.productType)
+                                      .toList()[index];
+                                  return ProductContainer(
+                                    quantity: eachProduct.quantity,
+                                    onTap: () {
+                                      addToCart(eachProduct);
+                                    },
+                                    title: eachProduct.name,
+                                    imagePath: eachProduct.imagePath,
+                                    price: eachProduct.price,
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        } else {
+                          return Container();
+                        }
+                      })
                 ],
               ),
             ),

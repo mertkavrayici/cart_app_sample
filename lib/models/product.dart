@@ -1,4 +1,5 @@
 class Product {
+   late final int? id;
   String name;
   int? price;
   String imagePath;
@@ -6,6 +7,7 @@ class Product {
   int? productType;
 
   Product({
+     this.id,
     required this.name,
      this.price,
     required this.imagePath,
@@ -14,13 +16,23 @@ class Product {
   });
 
 //veri dönüşümü
-  factory Product.fromMap(Map<dynamic, dynamic> map) {
-    return Product(
-      name: map['name'] ?? '',
-      price: map['price'] ?? '',
-      imagePath: map['imagePath'] ?? '',
-      quantity: map['quantity'] ?? '',
-      productType: map['productType'] ?? ''
-    );
+  Product.fromMap(Map<dynamic, dynamic>  res):
+  id = res['id'],
+  price  = res['price'],
+  name = res['name'],
+  imagePath = res['imagePath'],
+  quantity = res['quantity'],
+  productType = res['productType'];
+
+  Map<String , Object?> toMap(){
+    return {
+      'id': id,
+      'price' : price,
+      'name' : name,
+      'imagePath' : imagePath,
+      'quantity' : quantity,
+      'productType' : productType,
+
+    };
   }
 }

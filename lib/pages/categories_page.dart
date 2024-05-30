@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/components/app_bar.dart';
 import 'package:shop_app/components/container.dart';
 import 'package:shop_app/models/product.dart';
-import 'package:shop_app/models/shopping.dart';
+import 'package:shop_app/models/product_provider.dart';
 import 'package:shop_app/pages/products_page.dart';
 
 class CategoriesPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class CategoriesPage extends StatefulWidget {
 class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Shopping>(
+    return Consumer<ProductProvider>(
       builder: (context, value, child) => Scaffold(
         appBar: const ShoppAppBar(
           appbarTitle: "Kategoriler",
