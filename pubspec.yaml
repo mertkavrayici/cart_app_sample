@@ -12,6 +12,10 @@ dependencies:
   google_nav_bar: ^5.0.6
   provider:
   badges: ^3.1.2
+  shared_preferences: ^2.0.18
+  sqflite: ^2.2.6
+  path_provider: ^2.0.13
+
 
 dev_dependencies:
   flutter_test:

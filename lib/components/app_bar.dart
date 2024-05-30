@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/models/shopping.dart';
+import 'package:shop_app/models/product_provider.dart';
 import 'package:shop_app/pages/cart_page.dart';
 
 class ShoppAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -30,7 +30,7 @@ class ShoppAppBar extends StatelessWidget implements PreferredSizeWidget {
                       color: Colors.brown[100], size: 28),
                   Positioned(
                     child: Badge(
-                      label: Text(Provider.of<Shopping>(context, listen: false)
+                      label: Text(Provider.of<ProductProvider>(context, listen: false)
                           .userCart
                           .length
                           .toString()),

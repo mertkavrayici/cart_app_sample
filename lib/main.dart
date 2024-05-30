@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/models/shopping.dart';
+import 'package:shop_app/models/product_provider.dart';
 import 'package:shop_app/pages/first_page.dart';
 
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => Shopping(),
+      create: (context) => ProductProvider(),
       builder: (context, child) => const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: FirstPage(),
